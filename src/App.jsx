@@ -22,6 +22,7 @@ function App() {
   ])
 
   const [products,setProducts] = useState([]);
+  const [visibility,setVisibility]=useState(true);
 
   async function fetchData() {
     try {
@@ -52,28 +53,46 @@ function App() {
         justifyContent:"space-between"
       }}
       >
-      {
-       /* students.map((student)=>{
-          return <StudentCard ele={student}/>
-        })*/
-
-         /* students.map((student)=>(
-            <StudentCard key={student} ele={student} showMyName={showName}/>
-          ))*/
-
-           /* students.map((student)=>(
-              <StudentCard key={student} name={student.name} myClass={student.class} showMyName={showName}/>
-            ))*/
-           products.map((product)=>{
-            console.log(product)
-            return <ProductCard 
-            title={product.title} 
-            price={product.price} 
-            image={product.image}
-            description={product.description}
-            />
-            })
-      }
+        <button
+        onClick={()=>{
+          setVisibility(!visibility)
+        }}
+        >{visibility?"Hide products":"Visible Products"}</button>
+          <button
+          onClick={
+            ()=>{
+              const filteredData = products.filter((ele)=>{
+                return ele.price<100;
+              })
+              setProducts(filteredData)
+            }
+          }
+          >Filter by price less than 200</button>
+          {
+            visibility?
+            
+              /* students.map((student)=>{
+                 return <StudentCard ele={student}/>
+               })*/
+       
+                /* students.map((student)=>(
+                   <StudentCard key={student} ele={student} showMyName={showName}/>
+                 ))*/
+       
+                  /* students.map((student)=>(
+                     <StudentCard key={student} name={student.name} myClass={student.class} showMyName={showName}/>
+                   ))*/
+                  products.map((product)=>{
+                   console.log(product)
+                   return <ProductCard 
+                   title={product.title} 
+                   price={product.price} 
+                   image={product.image}
+                   description={product.description}
+                   />
+                   })
+             :""
+          }
       </div>
     </>
   )
